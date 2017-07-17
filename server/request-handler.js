@@ -41,18 +41,8 @@ var requestHandler = function(request, response) {
     results: [],
   };
 
-  const { method, url } = request;
-
-  
-
-  // if (method === 'GET') {
-
-  // } else if (method === 'POST') {
-  //   // post to the results array
-  // }
-
   // The outgoing status.
-  var statusCode; // = 200;
+  var statusCode = 200; // = 200;
 
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
@@ -62,7 +52,6 @@ var requestHandler = function(request, response) {
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
   headers['Content-Type'] = 'text/plain';
-  // headers['Content-Type'] = 'JSON';
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
@@ -75,12 +64,15 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  if (method === 'GET') {
+  if (request.method === 'GET') {
     statusCode = 200;
-  } else if (method === 'POST') {
+  } 
+  if (request.method === 'POST') {
     statusCode = 201;
     request.setEncoding('utf8');
     request.on('data', (chunk) => {responseObj.results.push(JSON.parse(chunk));});
+  } if (request.url !== '/classes/messages') {
+    statusCode = 404;
   }
 
   response.writeHead(statusCode, headers);
