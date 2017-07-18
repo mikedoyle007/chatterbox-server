@@ -66,6 +66,7 @@ var requestHandler = function(request, response) {
   // node to actually send all the data over to the client.
   if (request.method === 'GET') {
     statusCode = 200;
+    console.log('results = ', JSON.stringify(responseObj));
   } 
   if (request.method === 'POST') {
     statusCode = 201;
